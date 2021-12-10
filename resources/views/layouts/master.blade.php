@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>AdminLTE 3 | Starter</title>
+  <title>Mapp</title>
 <link rel="stylesheet" href="/css/app.css">
 </head>
 <body class="hold-transition sidebar-mini">
@@ -209,10 +209,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+              <router-link to="/" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Active Page</p>
                 </a>
+                </router-link>
               </li>
              
             </ul>
@@ -226,7 +228,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
 
               <li class="nav-item">
-                <router-link to="/dashboard" class="nav-link">
+                <router-link to="#" class="nav-link">
                   <i class="nav-icon fas fa-power-off"></i>
                   <p>Logout</p>
 </router-link>
