@@ -10,7 +10,6 @@
                 <div class="card-tools">
                   <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#adduser">Add New <i class="fas fa-user-plus"></i></button>
                 </div>
-
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
@@ -26,7 +25,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>1833bbbbbb</td>
+                      <td>183</td>
                       <td>John Doe</td>
                       <td>11-7-2014</td>
                       <td>Approved</td>
@@ -44,7 +43,6 @@
           </div>
         </div>
         <!-- /.row -->
-
         <!-- Modal -->
 <div class="modal fade" id="adduser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -55,8 +53,8 @@
       </div>
       <div class="modal-body">
 
-  <div class="form-control">
-      <div class="form-group">
+  <div class="form-group">
+    <div class="form-group">
     <input id="username" v-model="form.name" type="text" name="name" placeholder="Name"
      class="form-control" :class="{ 'is-invalid' : form.errors.has('name')}" >
     <HasError :form="form" field="username" />
