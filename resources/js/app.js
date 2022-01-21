@@ -7,12 +7,19 @@
 require('./bootstrap');
 
 window.Vue = require('vue').default;
-import Form from 'vform'
+import { Form, Errors, Default } from 'vform';
 window.Form = Form;
-// Vue.component(HasError.name,HasError);
+Vue.component(Errors.name, Errors);
 // Vue.component(AlertError.name,AlertError)
-
-import VueRouter from 'vue-router'
+import moment from 'moment';
+import VueRouter from 'vue-router';
+// progreessbar======
+import VueProgressBar from 'vue-progressbar';
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '2px'
+})
 
 Vue.use(VueRouter)
 
@@ -33,6 +40,16 @@ const router = new VueRouter({
     routes // short for `routes: routes`
   })
 
+//filter example
+  Vue.filter('capitalize', function (value) {
+    if (!value) return ''
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+  })
+  Vue.filter('myDate',function(created){
+    return moment(created).format('MMMM Do YYYY');
+  })
+  
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

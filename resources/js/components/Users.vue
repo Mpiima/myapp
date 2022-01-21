@@ -20,15 +20,17 @@
                       <th>Name</th>
                       <th>Email</th>
                       <th>Type</th>
+                      <th>Registered on</th>
                       <th>Modify</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td>Approved</td>
+                    <tr v-for="user in users" :key="user.id">
+                      <td>{{user.id}}</td>
+                      <td>{{user.name}}</td>
+                      <td>{{user.email}}</td>
+                      <td>{{user.type | capitalize}}</td>
+                      <td>{{user.created_at | myDate}}</td>
                       <td>
                           <i class="fas fa-edit blue"></i>
                            <i class="fas fa-trash red"></i>
@@ -53,31 +55,44 @@
       </div>
       <div class="modal-body">
 
-  <div class="form-group">
-    <div class="form-group">
-    <input id="username" v-model="form.name" type="text" name="name" placeholder="Name"
-     class="form-control" :class="{ 'is-invalid' : form.errors.has('name')}" >
-    <HasError :form="form" field="username" />
-  </div>
-<div class="form-group">
-    <input id="email" v-model="form.email" type="email" name="name"
-     placeholder="Email"
-     class="form-control" :class="{ 'is-invalid' : form.errors.has('name')}" >
-    <HasError :form="form" field="username" />
-  </div>
-       
-       <div class="form-group">
-    <input id="password" v-model="form.password" type="text" name="name" 
-    placeholder="Password"
-     class="form-control" :class="{ 'is-invalid' : form.errors.has('name')}" >
-    <HasError :form="form" field="username" />
-  </div>
 
-      </div></div>
+<form @submit.prevent="createUser">
+   <div class="form-group">
+    <input v-model="form.name" type="text" name="name" placeholder="Name" class="form-control">
+    <div v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+    </div>
+    <div class="form-group">
+    <input v-model="form.email" type="text" name="type" placeholder="Email" class="form-control">
+    <div v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
+      </div>
+      
+       <div class="form-group">
+    <textarea v-model="form.bio"  name="bio" placeholder="Short bio for user(Optional)" class="form-control">
+    </textarea>
+    <div v-if="form.errors.has('bio')" v-html="form.errors.get('bio')" />
+      </div>
+
+       <div class="form-group">
+    <select v-model="form.type"  name="type" placeholder="Short bio for user(Optional)" class="form-control">
+      <option value="">Select User Role</option>
+      <option value="admin">Admin</option>
+      <option value="user">Standard User</option>
+      <option value="author">Author</option>
+    </select>
+    <div v-if="form.errors.has('type')" v-html="form.errors.get('type')" />
+      </div>
+    
+    <div class="form-group">
+    <input v-model="form.password" type="password" name="password" placeholder="password" class="form-control">
+    <div v-if="form.errors.has('password')" v-html="form.errors.get('password')" />
+      </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">create</button>
+        <button type="submit" class="btn btn-primary">create</button>
       </div>
+    </form>
+    </div>
     </div>
   </div>
 </div>
@@ -88,6 +103,7 @@
     export default {
         data(){
         return{
+          users : {},
          form:new Form(
              {
                  name : '',
@@ -100,8 +116,18 @@
          )
         }
         },
-        mounted() {
-            console.log('Component mounted.')
+          methods: {
+     loadUsers(){
+         axios.get("api/user").then(({ data }) => (this.users = data.data));
+            },
+   createUser(){
+    this.$Progress.start();
+     this.form.post('api/user');
+     this.$Progress.finish()
+   }
+  },
+        created() {
+            this.loadUsers();
         }
     }
 </script>
